@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   
   resources :movies, only: [:index, :show, :new, :create] do
-    resources :reviews, only: [:create]
+    resources :reviews, only: [:create, :destroy]
   end
 
   root 'movies#index'

@@ -1,0 +1,10 @@
+<div class="bg-white shadow rounded p-4 mb-4">
+  <p>
+    <strong><%= review.user.email %>:</strong>
+    Rated <%= review.rating %>/10
+    <% if review.user == current_user %>
+      <%= link_to 'Delete', movie_review_path(@movie, review),  data: {"turbo-method": :delete,  confirm: 'Are you sure?' }, class: 'text-red-500 ml-2' %>
+    <% end %>
+  </p>
+  <p><%= review.comment %></p>
+</div>

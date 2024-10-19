@@ -1,0 +1,27 @@
+<%= form_with(model: [movie, review], class: "space-y-4 mt-4") do |form| %>
+  <% if review.errors.any? %>
+    <div class="bg-red-100 text-red-700 p-4 rounded">
+      <h2 class="font-bold">Please fix the following errors:</h2>
+      <ul class="list-disc pl-5">
+        <% review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Form fields -->
+  <div>
+    <%= form.label :rating, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :rating, options_for_select(1..10), {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :comment, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_area :comment, rows: 5, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.submit "Submit Review", class: "bg-indigo-600 text-white px-4 py-2 rounded" %>
+  </div>
+<% end %>

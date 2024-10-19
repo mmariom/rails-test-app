@@ -1,71 +1,34 @@
 <h1 class="text-3xl font-bold"><%= @movie.title %> (<%= @movie.year %>)</h1>
 
-<!-- Existing code -->
 
-<% if flash[:alert] %>
-  <div class="bg-red-100 text-red-700 p-4 rounded">
-    <p><%= flash[:alert] %></p>
-  </div>
-<% end %>
 
-<% if @review.errors.any? %>
-  <div class="bg-red-100 text-red-700 p-4 rounded">
-    <h2 class="font-bold">Please fix the following errors:</h2>
-    <ul class="list-disc pl-5">
-      <% @review.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
 
-<!-- Reviews section -->
+
 <div class="mt-6">
   <h2 class="text-2xl font-semibold mb-4">Reviews</h2>
-  <% if @movie.reviews.any? %>
-    <% @movie.reviews.each do |review| %>
-      <div class="bg-white shadow rounded p-4 mb-4">
-        <p><strong><%= review.user.email %>:</strong> Rated <%= review.rating %>/10</p>
-        <p><%= review.comment %></p>
-      </div>
+  <div id="reviews">
+    <% if @reviews.any? %>
+      <% @reviews.each do |review| %>
+        <%= render partial: 'movies/review', locals: { review: review, movie: @movie } %>
+      <% end %>
+    <% else %>
+      <p>No reviews yet.</p>
     <% end %>
-  <% else %>
-    <p>No reviews yet.</p>
-  <% end %>
+  </div>
 </div>
+
 
 <!-- Form to add a new review -->
 <% if user_signed_in? %>
   <h3 class="text-xl font-semibold mt-6">Add a Review</h3>
 
-  <%= form_for([@movie, @review], html: { class: "space-y-4 mt-4" }) do |form| %>
-    <% if @review.errors.any? %>
-      <div class="bg-red-100 text-red-700 p-4 rounded">
-        <h2 class="font-bold">Please fix the following errors:</h2>
-        <ul class="list-disc pl-5">
-          <% @review.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+<div id="review_form">
+  <%= render partial: 'movies/review_form', locals: { movie: @movie, review: @review } %>
+</div>
 
-    <div>
-      <%= form.label :rating, class: "block text-sm font-medium text-gray-700" %>
-      <%= form.select :rating, options_for_select(1..10), {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm" %>
-    </div>
-
-    <div>
-      <%= form.label :comment, class: "block text-sm font-medium text-gray-700" %>
-      <%= form.text_area :comment, rows: 5, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm" %>
-    </div>
-
-    <div>
-      <%= form.submit "Submit Review", class: "bg-indigo-600 text-white px-4 py-2 rounded" %>
-    </div>
-  <% end %>
 <% else %>
   <p class="mt-6">
     Please <%= link_to 'log in', new_user_session_path %> or <%= link_to 'sign up', new_user_registration_path %> to add a review.
   </p>
 <% end %>
+

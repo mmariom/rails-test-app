@@ -8,8 +8,11 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
-    @review ||= Review.new
+    @review = Review.new
+    @reviews = @movie.reviews.includes(:user)
   end
+  
+  
 
   def new
     @movie = Movie.new
