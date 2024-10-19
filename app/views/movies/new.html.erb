@@ -1,0 +1,30 @@
+<h1 class="text-2xl font-bold mb-4">Add a New Movie</h1>
+
+<%= form_with model: @movie, local: true, class: "space-y-4" do |form| %>
+  <% if flash[:alert] %>
+    <div class="bg-red-100 text-red-700 p-4 rounded">
+      <p><%= flash[:alert] %></p>
+    </div>
+  <% end %>
+
+  <% if @movie.errors.any? %>
+    <div class="bg-red-100 text-red-700 p-4 rounded">
+      <h2 class="font-bold">Please fix the following errors:</h2>
+      <ul class="list-disc pl-5">
+        <% @movie.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :title, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm" %>
+    <p class="text-sm text-gray-500 mt-1">Enter the movie title to fetch details from OMDb API.</p>
+  </div>
+
+  <div>
+    <%= form.submit "Add Movie", class: "bg-indigo-600 text-white px-4 py-2 rounded" %>
+  </div>
+<% end %>

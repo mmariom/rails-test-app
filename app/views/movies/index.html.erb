@@ -1,0 +1,14 @@
+<h1 class="text-2xl font-bold mb-4">Movies</h1>
+
+<% if user_signed_in? %>
+  <%= link_to 'Add a New Movie', new_movie_path, class: 'bg-indigo-600 text-white px-4 py-2 rounded mb-4 inline-block' %>
+<% end %>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+  <% @movies.each do |movie| %>
+    <div class="bg-white shadow rounded p-4">
+      <h2 class="text-xl font-semibold"><%= link_to movie.title, movie_path(movie) %></h2>
+      <p class="text-gray-600"><%= movie.year %></p>
+    </div>
+  <% end %>
+</div>
